@@ -1,14 +1,14 @@
 import { useState } from "react";
 
 export default function WorkoutLogger({ goBack }) {
-  const exercises = ["Push Ups", "Squats", "Sit Ups"];
-
+  const exercises = ["Push Ups", "Squats", "Sit Ups"];//temp example exercises eventually api call to get exercises
   const [view, setView] = useState("list");
   const [selected, setSelected] = useState(null);
   const [reps, setReps] = useState("");
   const [sets, setSets] = useState("");
   const [savedWorkouts, setSavedWorkouts] = useState([]);
 
+  //temp save function, saves workouts to array
   const saveWorkout = () => {
     if (!reps || !sets) return;
 
@@ -22,6 +22,7 @@ export default function WorkoutLogger({ goBack }) {
     setView("list");
   };
 
+//back button
   return (
     <div>
       <button onClick={goBack} className="mb-3 p-2 bg-blue-500 text-white rounded cursor-pointer">
@@ -29,7 +30,7 @@ export default function WorkoutLogger({ goBack }) {
       </button>
 
       <h2 className="text-lg font-semibold mb-3">Workout Logger</h2>
-
+{/*list of exercises, on click goes to detail view to log sets and reps, also shows saved workouts */}
       {view === "list" && (
         <>
           {exercises.map((ex, i) => (
