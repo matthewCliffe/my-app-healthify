@@ -4,7 +4,7 @@ export default function Login({ onLogin }) {
   const [username, setUsername] = useState("");
 //updates the username state 
   return (
-    <div className="bg-green-500 p-6 rounded-2xl shadow-md w-full max-w-sm">
+    <div className="bg-black p-6 rounded-2xl shadow-md w-full max-w-sm">
       <h1 className="text-xl font-bold mb-4">Login</h1>
       <input
         className="w-full p-2 border rounded mb-3"
@@ -14,7 +14,7 @@ export default function Login({ onLogin }) {
       />
       {/* calls onLogin with current username entered */}
       <button
-        className="w-full bg-blue-500 text-white p-2 rounded"
+        className="w-full bg-green-500 text-black p-2 rounded"
         onClick={() => onLogin(username)}
       >
         Login
