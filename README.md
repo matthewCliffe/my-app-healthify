@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Healthify
 
-## Getting Started
+Healthify is a polished **Next.js App Router** fitness tracker built to satisfy a full-stack course rubric.
 
-First, run the development server:
+## Included features
+
+- Authentication with **Firebase Identity Toolkit** REST API
+- Protected dashboard routes with **middleware**
+- Role-based access (`user` and `admin` demo roles)
+- Persistent storage with **Firestore REST API** when Firebase env vars are provided
+- Demo mode fallback so the app still runs without external keys
+- CRUD Route Handlers for profile, goals, meals, workouts, and recipes
+- External REST integration for **ExerciseDB** plus local food search for nutrition logging
+- Responsive dashboard with streaks, achievements, friends, recipe sharing, and charts
+- Loading and error boundaries
+- Accessible forms, buttons, states, and semantic sections
+
+## Routes
+
+- `/` landing page
+- `/login` and `/signup`
+- `/dashboard`
+- `/dashboard/admin` (admin-only)
+
+## Environment variables
+
+Copy `.env.example` to `.env.local` and fill in your own values:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+FIREBASE_API_KEY=
+FIREBASE_PROJECT_ID=
+EXERCISE_DB_API_KEY=
+HEALTHIFY_ADMIN_EMAIL=admin@healthify.app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Demo accounts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+When Firebase is not configured:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Admin:** `admin@healthify.app` / `password123`
+- **User:** `demo@healthify.app` / `password123`
 
-## Learn More
+## Deployment notes
 
-To learn more about Next.js, take a look at the following resources:
+This codebase is deployment-ready for Vercel, but publishing to a live Vercel URL and linking GitHub auto-deploy still must be completed in your own Vercel account.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Suggested Firestore collections
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```text
+users/{uid}/profile/main
+users/{uid}/goals/{goalId}
+users/{uid}/meals/{mealId}
+users/{uid}/workouts/{workoutId}
+users/{uid}/recipes/{recipeId}
+```
 
-## Deploy on Vercel
+## Grading coverage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 1. Next.js Fundamentals
+- App Router and route groups
+- Server and client component split
+- `layout.tsx`, `loading.tsx`, `error.tsx`, `not-found.tsx`
+- Middleware-protected routes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 2. UI/UX Design
+- Responsive layout
+- Empty states, success/error alerts, and loading states
+- Accessible buttons, labels, and landmarks
+
+### 3. Authentication
+- Sign up, log in, log out
+- Session persistence through HTTP-only cookies
+- Protected routes and role-based admin route
+
+### 4. Full-Stack API Development
+- Route Handlers using GET, POST, PUT, PATCH, and DELETE
+- Error handling and status codes
+- Frontend and backend integration
+
+### 5. Third-Party Database
+- Firestore persistence when configured
+- Structured user subcollections for CRUD data
+
+### 6. RESTful API Integration
+- ExerciseDB search proxy
+- Local food search route for nutrition logging
