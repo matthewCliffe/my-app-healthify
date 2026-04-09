@@ -213,7 +213,7 @@ export function DashboardClient({ profile, meals: initialMeals, workouts: initia
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-emerald-700">Healthify dashboard</p>
           <h1 className="mt-2 text-4xl font-bold text-slate-950">Welcome back, {activeProfile.name}</h1>
           <p className="mt-2 text-slate-600">
-            Track workouts, nutrition, goals, streaks, recipes, friends, and achievements from one responsive dashboard.
+            Track workouts, nutrition, goals, streaks, recipes, friends, and achievements.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-3">

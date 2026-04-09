@@ -82,12 +82,6 @@ export async function updateProfile(payload: Partial<UserProfile>) {
 
 export async function getAdminSummary() {
   await requireAdminSession();
-  return [
-    { label: "Registered roles", value: "user + admin", description: "The app demonstrates role-based route protection." },
-    { label: "Tracked modules", value: "5", description: "Goals, meals, workouts, recipes, and profile records." },
-    { label: "REST integrations", value: "2", description: "Exercise search and food search endpoints." },
-    { label: "Demo seed records", value: String(sampleGoals.length + sampleMeals.length + sampleWorkouts.length + sampleRecipes.length), description: "Seeded content appears instantly in demo mode." },
-  ];
 }
 
 export function getDefaultProfileFor(email: string, role: "user" | "admin"): UserProfile {

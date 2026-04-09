@@ -41,7 +41,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   return (
     <form action={handleSubmit} className="card mx-auto w-full max-w-md space-y-5 p-8" aria-label={mode === "login" ? "Login form" : "Signup form"}>
       <div>
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-emerald-700">Healthify auth</p>
+        <p className="text-sm font-medium uppercase tracking-[0.2em] text-emerald-700">Healthify</p>
         <h1 className="mt-2 text-3xl font-bold text-slate-950">{mode === "login" ? "Welcome back" : "Create your account"}</h1>
         <p className="mt-2 text-sm text-slate-600">
           {mode === "login"
@@ -53,18 +53,18 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       {mode === "signup" && (
         <div>
           <label htmlFor="name" className="label">Full name</label>
-          <input id="name" name="name" placeholder="Jamie Carter" required />
+          <input id="name" name="name" placeholder="John Doe" required />
         </div>
       )}
 
       <div>
         <label htmlFor="email" className="label">Email address</label>
-        <input id="email" name="email" type="email" placeholder={mode === "login" ? "demo@healthify.app" : "you@example.com"} required />
+        <input id="email" name="email" type="email" placeholder="you@webdevclass.com" required />
       </div>
 
       <div>
         <label htmlFor="password" className="label">Password</label>
-        <input id="password" name="password" type="password" placeholder="At least 6 characters" minLength={6} required />
+        <input id="password" name="password" type="password" placeholder="Must be at least 6 characters" minLength={6} required />
       </div>
 
       {mode === "signup" && (
@@ -72,20 +72,20 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="currentWeight" className="label">Current weight</label>
-              <input id="currentWeight" name="currentWeight" type="number" min={1} defaultValue={180} required />
+              <input id="currentWeight" name="currentWeight" type="number" min={0} defaultValue={0} required />
             </div>
             <div>
               <label htmlFor="goalCalories" className="label">Daily calorie goal</label>
-              <input id="goalCalories" name="goalCalories" type="number" min={1000} defaultValue={2200} required />
+              <input id="goalCalories" name="goalCalories" type="number" min={0} defaultValue={0} required />
             </div>
           </div>
-          <p className="text-xs text-slate-500">In demo mode, use admin@healthify.app for admin access or any other email for a regular user.</p>
+          <p className="text-xs text-slate-500">Login with matthewcliffec22@gmail.com password 123456 for admin mode</p>
         </>
       )}
 
       {mode === "login" && (
         <div className="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-700 ring-1 ring-slate-200">
-          Demo login: <span className="font-medium">demo@healthify.app</span> or <span className="font-medium">admin@healthify.app</span> with password <span className="font-medium">password123</span>
+          Admin login: <span className="font-medium">matthewcliffec22@gmail.com</span> with password <span className="font-medium">123456</span>
         </div>
       )}
 
