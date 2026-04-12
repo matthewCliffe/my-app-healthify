@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   const q = (searchParams.get("q") || "").trim().toLowerCase();
 
   const items = sampleFoods
-    .filter((item) => !q || item.food_name.toLowerCase().includes(q))
+    .filter((item) => !q || String(item.food_name).toLowerCase().includes(q))
     .slice(0, 12);
 
   return NextResponse.json({ items, source: "local" });

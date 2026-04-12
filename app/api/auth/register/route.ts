@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { firebaseAuthRequest, getDemoUser, hasFirebaseConfig, setSessionCookies, upsertDocument } from "@/lib/firebase";
+import { firebaseAuthRequest, getDemoUser, hasFirebaseConfig, setSessionCookies } from "@/lib/firebase";
 import { getDefaultProfileFor, seedUserData } from "@/lib/server-data";
 
 export async function POST(request: Request) {
@@ -14,8 +14,10 @@ export async function POST(request: Request) {
     const profile = {
       ...getDefaultProfileFor(String(email), role),
       name: name || (role === "admin" ? "Admin Coach" : "Healthify User"),
-      currentWeight: Number(currentWeight || 180),
+      currentWeight: Number(currentWeight || 0),
       goalCalories: Number(goalCalories || 2200),
+      dailyStreak: 1,
+      lastLoginDate: new Date().toISOString(),
     };
 
     if (!hasFirebaseConfig()) {
@@ -35,7 +37,6 @@ export async function POST(request: Request) {
       returnSecureToken: true,
     });
 
-    await upsertDocument(`users/${signup.localId}/profile/main`, profile, signup.idToken);
     await seedUserData(profile, signup.localId, signup.idToken);
     await setSessionCookies({ idToken: signup.idToken, localId: signup.localId, role, email });
 

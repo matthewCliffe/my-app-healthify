@@ -17,6 +17,10 @@ export async function POST(request: Request) {
     if (!payload.id || !payload.name) {
       return NextResponse.json({ error: "Recipe id and name are required." }, { status: 400 });
     }
+    const invalidQuantity = payload.items.some((item) => Number(item.quantity) < 1 || Number.isNaN(Number(item.quantity)));
+    if (invalidQuantity) {
+      return NextResponse.json({ error: "Recipe item quantity must be 1 or more." }, { status: 400 });
+    }
     return NextResponse.json({ item: await createItem("recipes", payload) }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : "Unable to create recipe." }, { status: 400 });

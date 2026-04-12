@@ -6,7 +6,6 @@ export type UserProfile = {
   email: string;
   role: Role;
   currentWeight: number;
-  weightLost: number;
   dailyStreak: number;
   achievements: string[];
   friends: string[];
@@ -14,6 +13,15 @@ export type UserProfile = {
   weeklyCaloricIntake: number;
   goalCalories: number;
   goalWorkoutsPerWeek: number;
+  joinedAt: string;
+  lastLoginDate?: string;
+};
+
+export type PublicUser = {
+  id: string;
+  name: string;
+  email: string;
+  role: Role;
   joinedAt: string;
 };
 
@@ -38,7 +46,7 @@ export type Workout = {
   reps?: number;
   weight?: number;
   duration?: number;
-  caloriesBurned: number;
+  caloriesBurned?: number;
   description?: string;
   performedAt: string;
 };
@@ -64,6 +72,10 @@ export type Recipe = {
   name: string;
   description: string;
   items: RecipeItem[];
+  calories?: number;
+  protein?: number;
+  carbs?: number;
+  fat?: number;
   createdAt: string;
   shared: boolean;
 };
@@ -71,7 +83,8 @@ export type Recipe = {
 export type SharePost = {
   id: string;
   author: string;
-  kind: "workout" | "recipe" | "goal" | "chart";
+  authorEmail?: string;
+  kind: "workout" | "recipe" | "goal";
   text: string;
   createdAt: string;
 };
@@ -83,4 +96,11 @@ export type DashboardData = {
   goals: Goal[];
   recipes: Recipe[];
   posts: SharePost[];
+  users: PublicUser[];
+};
+
+export type AchievementDefinition = {
+  id: string;
+  title: string;
+  description: string;
 };

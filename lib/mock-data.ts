@@ -1,68 +1,49 @@
-import type { DashboardData, Goal, Meal, Recipe, SharePost, UserProfile, Workout } from "./types";
+import type { AchievementDefinition, DashboardData, Goal, Meal, PublicUser, Recipe, SharePost, UserProfile, Workout } from "./types";
 
 const now = new Date();
 const iso = (daysAgo = 0) => new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000).toISOString();
+
+export const ACHIEVEMENTS: AchievementDefinition[] = [
+  { id: "7-day-streak", title: "7 Day Streak", description: "Log in 7 days in a row" },
+  { id: "first-workout", title: "First Workout", description: "Save your first workout" },
+  { id: "calorie-goal-hit", title: "Calorie Goal Hit", description: "Hit your calorie goal for the first time" },
+];
 
 export const defaultProfile: UserProfile = {
   name: "Healthify User",
   email: "demo@healthify.app",
   role: "user",
-  currentWeight: 180,
-  weightLost: 8,
-  dailyStreak: 12,
-  achievements: ["7-Day Streak", "First Workout", "Protein Goal Hit", "Recipe Creator"],
-  friends: ["Alex", "Jordan", "Taylor"],
-  dailyCaloricIntake: 2120,
-  weeklyCaloricIntake: 14750,
+  currentWeight: 0,
+  dailyStreak: 0,
+  achievements: [],
+  friends: [],
+  dailyCaloricIntake: 0,
+  weeklyCaloricIntake: 0,
   goalCalories: 2200,
-  goalWorkoutsPerWeek: 4,
-  joinedAt: iso(60),
+  goalWorkoutsPerWeek: 3,
+  joinedAt: iso(0),
+  lastLoginDate: iso(0),
 };
 
 export const adminProfile: UserProfile = {
   ...defaultProfile,
   name: "Admin Coach",
-  email: "admin@healthify.app",
+  email: process.env.HEALTHIFY_ADMIN_EMAIL || "admin@healthify.app",
   role: "admin",
 };
 
-export const sampleGoals: Goal[] = [
-  { id: "goal-1", title: "Daily calories", target: "Stay under 2200 kcal", category: "nutrition", completed: false, createdAt: iso(1) },
-  { id: "goal-2", title: "Workout frequency", target: "Complete 4 workouts this week", category: "fitness", completed: true, createdAt: iso(3) },
-  { id: "goal-3", title: "Hydration habit", target: "Drink 2 liters of water daily", category: "habit", completed: false, createdAt: iso(5) },
-];
+export const sampleGoals: Goal[] = [];
+export const sampleMeals: Meal[] = [];
+export const sampleWorkouts: Workout[] = [];
+export const sampleRecipes: Recipe[] = [];
+export const samplePosts: SharePost[] = [];
 
-export const sampleMeals: Meal[] = [
-  { id: "meal-1", name: "Chicken rice bowl", quantity: "1 bowl", calories: 620, protein: 42, carbs: 58, fat: 16, mealType: "lunch", loggedAt: iso(0) },
-  { id: "meal-2", name: "Greek yogurt", quantity: "1 cup", calories: 150, protein: 15, carbs: 10, fat: 4, mealType: "snack", loggedAt: iso(1) },
-  { id: "meal-3", name: "Oatmeal", quantity: "1 serving", calories: 340, protein: 18, carbs: 46, fat: 9, mealType: "breakfast", loggedAt: iso(2) },
-];
-
-export const sampleWorkouts: Workout[] = [
-  { id: "workout-1", type: "strength", exercise: "Bench Press", sets: 4, reps: 8, weight: 135, caloriesBurned: 210, performedAt: iso(0) },
-  { id: "workout-2", type: "cardio", exercise: "Cycling", duration: 30, caloriesBurned: 280, performedAt: iso(1) },
-  { id: "workout-3", type: "custom", exercise: "Mobility Flow", duration: 20, caloriesBurned: 90, description: "Stretch + core", performedAt: iso(3) },
-];
-
-export const sampleRecipes: Recipe[] = [
-  {
-    id: "recipe-1",
-    name: "High Protein Breakfast",
-    description: "Oats, berries, yogurt, and protein powder.",
-    items: [
-      { name: "Rolled oats", quantity: "50g", calories: 190 },
-      { name: "Greek yogurt", quantity: "170g", calories: 100 },
-      { name: "Blueberries", quantity: "1/2 cup", calories: 42 },
-    ],
-    createdAt: iso(4),
-    shared: true,
-  },
-];
-
-export const samplePosts: SharePost[] = [
-  { id: "post-1", author: "Alex", kind: "workout", text: "Shared a leg day workout and burned 420 kcal.", createdAt: iso(0) },
-  { id: "post-2", author: "Jordan", kind: "recipe", text: "Posted a chicken wrap meal-prep recipe.", createdAt: iso(1) },
-  { id: "post-3", author: "Taylor", kind: "goal", text: "Completed a 10,000 step goal for the week.", createdAt: iso(2) },
+export const demoUsers: PublicUser[] = [
+  { id: "demo-admin", name: adminProfile.name, email: adminProfile.email, role: "admin", joinedAt: iso(30) },
+  { id: "demo-user", name: "Healthify User", email: defaultProfile.email, role: "user", joinedAt: iso(10) },
+  { id: "demo-ava", name: "Ava Stone", email: "ava@example.com", role: "user", joinedAt: iso(8) },
+  { id: "demo-noah", name: "Noah Cruz", email: "noah@example.com", role: "user", joinedAt: iso(7) },
+  { id: "demo-mia", name: "Mia Brooks", email: "mia@example.com", role: "user", joinedAt: iso(5) },
 ];
 
 export const sampleExercises = [
@@ -70,14 +51,78 @@ export const sampleExercises = [
   { id: "squat", name: "Back Squat", bodyPart: "legs", equipment: "barbell", target: "quadriceps" },
   { id: "run", name: "Treadmill Run", bodyPart: "cardio", equipment: "treadmill", target: "cardiovascular system" },
   { id: "deadlift", name: "Romanian Deadlift", bodyPart: "legs", equipment: "barbell", target: "hamstrings" },
+  { id: "row", name: "Seated Row", bodyPart: "back", equipment: "cable", target: "lats" },
+  { id: "plank", name: "Plank", bodyPart: "core", equipment: "body weight", target: "abdominals" },
+  { id: "bike", name: "Stationary Bike", bodyPart: "cardio", equipment: "bike", target: "cardiovascular system" },
+  { id: "lunges", name: "Walking Lunges", bodyPart: "legs", equipment: "dumbbell", target: "glutes" },
 ];
 
 export const sampleFoods = [
-  { food_name: "grilled chicken breast", serving_qty: 1, serving_unit: "breast", nf_calories: 187, nf_protein: 35, nf_total_carbohydrate: 0, nf_total_fat: 4 },
-  { food_name: "brown rice", serving_qty: 1, serving_unit: "cup", nf_calories: 216, nf_protein: 5, nf_total_carbohydrate: 45, nf_total_fat: 2 },
-  { food_name: "banana", serving_qty: 1, serving_unit: "medium", nf_calories: 105, nf_protein: 1, nf_total_carbohydrate: 27, nf_total_fat: 0 },
-  { food_name: "salmon", serving_qty: 1, serving_unit: "fillet", nf_calories: 233, nf_protein: 25, nf_total_carbohydrate: 0, nf_total_fat: 14 },
-];
+  ["apple", 1, "medium", 95, 0, 25, 0],
+  ["banana", 1, "medium", 105, 1, 27, 0],
+  ["orange", 1, "medium", 62, 1, 15, 0],
+  ["strawberries", 1, "cup", 49, 1, 12, 0],
+  ["blueberries", 1, "cup", 84, 1, 21, 0],
+  ["grapes", 1, "cup", 104, 1, 27, 0],
+  ["pineapple", 1, "cup", 82, 1, 22, 0],
+  ["watermelon", 1, "cup", 46, 1, 12, 0],
+  ["broccoli", 1, "cup", 31, 3, 6, 0],
+  ["spinach", 1, "cup", 7, 1, 1, 0],
+  ["carrots", 1, "cup", 52, 1, 12, 0],
+  ["sweet potato", 1, "medium", 112, 2, 26, 0],
+  ["white potato", 1, "medium", 161, 4, 37, 0],
+  ["brown rice", 1, "cup", 216, 5, 45, 2],
+  ["white rice", 1, "cup", 205, 4, 45, 0],
+  ["quinoa", 1, "cup", 222, 8, 39, 4],
+  ["rolled oats", 1, "cup", 307, 11, 55, 5],
+  ["whole wheat bread", 2, "slices", 160, 8, 28, 2],
+  ["bagel", 1, "medium", 277, 11, 55, 1],
+  ["pasta", 1, "cup", 221, 8, 43, 1],
+  ["grilled chicken breast", 1, "breast", 187, 35, 0, 4],
+  ["ground turkey", 4, "oz", 170, 22, 0, 9],
+  ["salmon", 1, "fillet", 233, 25, 0, 14],
+  ["tuna", 1, "can", 191, 42, 0, 1],
+  ["lean beef", 4, "oz", 230, 23, 0, 15],
+  ["shrimp", 4, "oz", 120, 23, 1, 1],
+  ["tofu", 4, "oz", 94, 10, 2, 6],
+  ["tempeh", 3, "oz", 160, 17, 9, 9],
+  ["black beans", 1, "cup", 227, 15, 41, 1],
+  ["lentils", 1, "cup", 230, 18, 40, 1],
+  ["eggs", 2, "large", 144, 12, 1, 10],
+  ["egg whites", 1, "cup", 126, 27, 2, 0],
+  ["greek yogurt", 1, "cup", 130, 23, 9, 0],
+  ["cottage cheese", 1, "cup", 206, 28, 8, 6],
+  ["cheddar cheese", 1, "oz", 114, 7, 1, 9],
+  ["milk", 1, "cup", 122, 8, 12, 5],
+  ["almonds", 1, "oz", 164, 6, 6, 14],
+  ["peanut butter", 2, "tbsp", 190, 8, 7, 16],
+  ["walnuts", 1, "oz", 185, 4, 4, 18],
+  ["avocado", 1, "half", 120, 2, 6, 11],
+  ["olive oil", 1, "tbsp", 119, 0, 0, 14],
+  ["hummus", 2, "tbsp", 70, 2, 4, 5],
+  ["protein shake", 1, "bottle", 160, 30, 6, 3],
+  ["turkey sandwich", 1, "sandwich", 320, 24, 32, 10],
+  ["caesar salad", 1, "bowl", 180, 7, 8, 14],
+  ["chicken rice bowl", 1, "bowl", 620, 42, 58, 16],
+  ["beef burrito", 1, "burrito", 540, 28, 54, 22],
+  ["veggie wrap", 1, "wrap", 310, 10, 39, 12],
+  ["oatmeal", 1, "serving", 340, 18, 46, 9],
+  ["granola bar", 1, "bar", 190, 4, 29, 7],
+  ["trail mix", 1, "oz", 173, 5, 15, 11],
+  ["yogurt parfait", 1, "cup", 220, 12, 31, 5],
+  ["pancakes", 3, "pancakes", 350, 8, 58, 9],
+  ["turkey chili", 1, "cup", 290, 24, 24, 10],
+  ["fried rice", 1, "cup", 333, 7, 43, 14],
+  ["sushi roll", 1, "roll", 255, 9, 38, 7],
+].map(([food_name, serving_qty, serving_unit, nf_calories, nf_protein, nf_total_carbohydrate, nf_total_fat]) => ({
+  food_name,
+  serving_qty,
+  serving_unit,
+  nf_calories,
+  nf_protein,
+  nf_total_carbohydrate,
+  nf_total_fat,
+}));
 
 export function getDemoDashboard(role: "user" | "admin" = "user"): DashboardData {
   return {
@@ -87,5 +132,6 @@ export function getDemoDashboard(role: "user" | "admin" = "user"): DashboardData
     goals: sampleGoals,
     recipes: sampleRecipes,
     posts: samplePosts,
+    users: demoUsers,
   };
 }

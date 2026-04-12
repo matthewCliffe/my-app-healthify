@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createItem, getDashboardData } from "@/lib/server-data";
+import { createItem, getDashboardData, syncAchievements } from "@/lib/server-data";
 import type { Meal } from "@/lib/types";
 
 export async function GET() {
@@ -17,7 +17,9 @@ export async function POST(request: Request) {
     if (!payload.id || !payload.name) {
       return NextResponse.json({ error: "Meal id and name are required." }, { status: 400 });
     }
-    return NextResponse.json({ item: await createItem("meals", payload) }, { status: 201 });
+    const item = await createItem("meals", payload);
+    const synced = await syncAchievements();
+    return NextResponse.json({ item, profile: synced.profile, notification: synced.notification }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : "Unable to create meal." }, { status: 400 });
   }

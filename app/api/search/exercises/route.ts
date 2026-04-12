@@ -23,7 +23,6 @@ export async function GET(request: Request) {
       }
     }
   } catch {
-    // fall back to mock data below
   }
 
   const items = sampleExercises.filter((item) => {

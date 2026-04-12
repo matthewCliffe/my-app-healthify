@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { firebaseAuthRequest, getDemoUser, hasFirebaseConfig, setSessionCookies } from "@/lib/firebase";
+import { recordLogin } from "@/lib/server-data";
 
 export async function POST(request: Request) {
   try {
@@ -30,6 +31,7 @@ export async function POST(request: Request) {
 
     const role = String(email).toLowerCase() === String(process.env.HEALTHIFY_ADMIN_EMAIL || "admin@healthify.app").toLowerCase() ? "admin" : "user";
 
+    await recordLogin(signin.localId, signin.idToken, String(email), role);
     await setSessionCookies({
       idToken: signin.idToken,
       localId: signin.localId,

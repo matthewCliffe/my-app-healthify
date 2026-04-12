@@ -79,20 +79,20 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
               <input id="goalCalories" name="goalCalories" type="number" min={0} defaultValue={0} required />
             </div>
           </div>
-          <p className="text-xs text-slate-500">Login with matthewcliffec22@gmail.com password 123456 for admin mode</p>
+          <p className="text-xs text-slate-500">Login with matthewcliffec22@gmail.com password password123 for admin mode</p>
         </>
       )}
 
       {mode === "login" && (
         <div className="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-700 ring-1 ring-slate-200">
-          Admin login: <span className="font-medium">matthewcliffec22@gmail.com</span> with password <span className="font-medium">123456</span>
+          Admin login: <span className="font-medium">matthewcliffec22@gmail.com</span> with password <span className="font-medium">password123</span>
         </div>
       )}
 
       {error && <p className="alert-error">{error}</p>}
 
       <button disabled={loading} className="btn-primary w-full" aria-busy={loading}>
-        {loading ? "Please wait..." : mode === "login" ? "Sign in" : "Create account"}
+        {mode === "login" ? "Sign in" : "Create account"}
       </button>
 
       <div className="text-center text-sm text-slate-600">
